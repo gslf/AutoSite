@@ -1,5 +1,7 @@
 from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
+from markdown.inlinepatterns import ImageInlineProcessor
+import markdown
 import re
 
 
@@ -19,3 +21,16 @@ class CodeBlockPreprocessor(Preprocessor):
 class CustomCodeBlockExtension(Extension):
     def extendMarkdown(self, md):
         md.preprocessors.register(CodeBlockPreprocessor(md), 'custom_code_block', 25)
+
+
+
+class ImageClassExtension(Extension):
+    def extendMarkdown(self, md):
+        md.inlinePatterns.register(ImageClassInlineProcessor(markdown.inlinepatterns.IMAGE_LINK_RE, md), 'image_class', 175)
+
+class ImageClassInlineProcessor(ImageInlineProcessor):
+    def handleMatch(self, m, data):
+        el, start, end = super().handleMatch(m, data)
+        if el is not None and el.tag == 'img':
+            el.set('class', 'openingImage')  # Aggiungi la classe desiderata
+        return el, start, end

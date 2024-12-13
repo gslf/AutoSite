@@ -1,6 +1,5 @@
 from typing import Tuple, Dict
-from utils.html_preprocessor import  CustomCodeBlockExtension
-
+from utils.html_preprocessor import  CustomCodeBlockExtension, ImageClassExtension
 import markdown
 
 class DataSource:
@@ -45,7 +44,7 @@ class DataSource:
         :param markdown_content: The markdown content to convert
         :return: HTML string
         """
-        return markdown.markdown(markdown_content, extensions=[CustomCodeBlockExtension()])
+        return markdown.markdown(markdown_content, extensions=[CustomCodeBlockExtension(), ImageClassExtension()])
 
     def process(self) -> Dict[str, str]:
         """
