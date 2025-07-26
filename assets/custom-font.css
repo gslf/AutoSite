@@ -1,0 +1,12 @@
+/* Custom font definition */
+@font-face {
+    font-family: 'Red Hat Mono';
+    src: url('./RedHatMono.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --custom-font-family: 'Red Hat Mono', 'Courier New', monospace;
+}

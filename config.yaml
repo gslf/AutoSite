@@ -1,0 +1,25 @@
+# Website title
+title: "🚀 AutoSite"
+
+# Base URL (leave empty for root, or use /subfolder for subdirectories)
+base_url: "/AutoSite/site"
+
+# Theme customization
+theme:
+  font_family: "'Red Hat Mono', 'Courier New', monospace"
+  primary_color: "#a1752f"
+  contrast_color: "#300175"
+
+# Website Pages
+homepage: "content/home.md"
+
+pages:
+  - title: "About"
+    path: "content/about.md"
+
+  - title: "Blog"
+    path: "content/blog"
+
+
+  - title: "GitHub"
+    path: "https://github.com"
