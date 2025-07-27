@@ -34,3 +34,20 @@ def extract_first_h1(md_content: str) -> Optional[str]:
     if match:
         return match.group(1).strip()
     return None
+
+
+def extract_first_h2(md_content: str) -> Optional[str]:
+    """
+    Extract the first H2 heading from markdown content.
+    
+    Args:
+        md_content: Markdown content to parse
+        
+    Returns:
+        First H2 heading text or None if not found
+    """
+    # Look for ## heading at the start of a line
+    match = re.search(r'^## (.+)$', md_content, re.MULTILINE)
+    if match:
+        return match.group(1).strip()
+    return None

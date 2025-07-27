@@ -48,6 +48,11 @@ header {
     transition: all 0.3s ease;
 }
 
+h2{
+    font-size: 1rem;
+    margin-bottom: 45px;
+}
+
 header .container { 
     display: flex; 
     align-items: center; 

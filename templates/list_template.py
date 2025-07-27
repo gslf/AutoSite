@@ -8,7 +8,12 @@ LIST_TEMPLATE = '''{% extends 'base.html' %}
 <section class="fade-in">
     <ul class="content-list">
     {% for item in items %}
-        <li><a href="{{ base_url }}{{ item.url }}">{{ item.title }}</a></li>
+        <li>
+            <a href="{{ base_url }}{{ item.url }}">{{ item.title }}</a>
+            {% if item.description %}
+            <p class="item-description">{{ item.description }}</p>
+            {% endif %}
+        </li>
     {% endfor %}
     </ul>
     <div class="pagination">

@@ -9,7 +9,7 @@ import markdown
 from jinja2 import Environment, DictLoader, select_autoescape
 
 from templates import TEMPLATES
-from core.utils import slugify, extract_first_h1
+from core.utils import slugify, extract_first_h1, extract_first_h2
 
 
 class PageGenerator:
@@ -33,15 +33,34 @@ class PageGenerator:
             autoescape=select_autoescape(['html', 'xml'])
         )
     
+    def _extract_page_metadata(self, md_content: str, fallback_title: str) -> Dict[str, str]:
+        """Extract metadata (title and description) from markdown content."""
+        title = extract_first_h1(md_content)
+        if not title:
+            title = fallback_title.replace('-', ' ').title()
+        
+        description = extract_first_h2(md_content)
+        if not description:
+            description = ""
+        
+        return {
+            'title': title,
+            'description': description
+        }
+    
     def generate_homepage(self, homepage_path: str) -> None:
         """Generate the homepage from markdown."""
         with open(homepage_path, encoding='utf-8') as f:
             raw = f.read()
         
+        # Extract metadata
+        metadata = self._extract_page_metadata(raw, 'Home')
+        
         html = markdown.markdown(raw, extensions=['fenced_code'])
         rendered = self.env.get_template('page.html').render(
             site_title=self.site_title, 
-            page_title='Home', 
+            page_title=metadata['title'], 
+            page_description=metadata['description'],
             content=html,
             nav=self.nav, 
             current_url='index.html', 
@@ -65,10 +84,14 @@ class PageGenerator:
         with open(path, encoding='utf-8') as f:
             raw = f.read()
         
+        # Extract metadata
+        metadata = self._extract_page_metadata(raw, title)
+        
         html = markdown.markdown(raw, extensions=['fenced_code'])
         rendered = self.env.get_template('page.html').render(
             site_title=self.site_title, 
-            page_title=title,
+            page_title=metadata['title'],
+            page_description=metadata['description'],
             content=html, 
             nav=self.nav, 
             current_url=f'{slug}.html', 
@@ -100,15 +123,14 @@ class PageGenerator:
             with open(md_file, encoding='utf-8') as f:
                 raw = f.read()
             
-            # Extract title from first H1 or fallback to filename
-            page_title = extract_first_h1(raw)
-            if not page_title:
-                page_title = name.replace('-', ' ').title()
+            # Extract metadata
+            metadata = self._extract_page_metadata(raw, name)
             
             content_html = markdown.markdown(raw, extensions=['fenced_code'])
             rendered = self.env.get_template('page.html').render(
                 site_title=self.site_title, 
-                page_title=page_title,
+                page_title=metadata['title'],
+                page_description=metadata['description'],
                 content=content_html, 
                 nav=self.nav,
                 current_url=f'{slug}/{page_slug}.html', 
@@ -122,7 +144,11 @@ class PageGenerator:
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(rendered)
             
-            items.append({'title': page_title, 'url': f'{slug}/{page_slug}.html'})
+            items.append({
+                'title': metadata['title'], 
+                'url': f'{slug}/{page_slug}.html',
+                'description': metadata['description']
+            })
         
         # Generate paginated list pages
         self._generate_paginated_list(items, title, slug, paginate_by)
@@ -140,9 +166,14 @@ class PageGenerator:
             prev_url = f'{slug}/page{i-1}.html' if i > 2 else (f'{slug}/index.html' if i == 2 else None)
             next_url = f'{slug}/page{i+1}.html' if i < pages_count else None
             
+            # Set page title and description for list pages
+            page_title = title if i == 1 else f'{title} - Page {i}'
+            page_description = f'{title} archive page' + (f' {i}' if i > 1 else '')
+            
             rendered = self.env.get_template('list.html').render(
                 site_title=self.site_title, 
-                page_title=title,
+                page_title=page_title,
+                page_description=page_description,
                 items=page_items, 
                 nav=self.nav,
                 current_url=f'{slug}/index.html',
