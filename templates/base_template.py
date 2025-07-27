@@ -20,12 +20,10 @@ BASE_TEMPLATE = '''<!DOCTYPE html>
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:url" content="{{ base_url }}{{ current_url }}" />
-    {% endif %}
     
     <!-- Twitter Meta Tags -->
     <meta name="twitter:title" content="{{ page_title }} - {{ site_title }}">
     <meta name="twitter:description" content="{{ page_description or 'Static site generated with AutoSite' }}">
-    {% endif %}
     <meta name="twitter:card" content="summary_large_image">
     
     <link rel="stylesheet" href="{{ base_url }}assets/custom-font.css">

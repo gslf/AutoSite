@@ -2,7 +2,7 @@
 title: "🚀 AutoSite"
 
 # Base URL (leave empty for root, or use /subfolder for subdirectories)
-base_url: "/AutoSite/site"
+base_url: "/site"
 
 # Theme customization
 theme:
