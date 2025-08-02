@@ -51,3 +51,33 @@ def extract_first_h2(md_content: str) -> Optional[str]:
     if match:
         return match.group(1).strip()
     return None
+
+
+def extract_order_number(filename: str) -> int:
+    """
+    Extract the order number from a filename with format 'number-name.ext'.
+    
+    Args:
+        filename: Filename to parse (with or without path)
+        
+    Returns:
+        Order number or 999999 if no number found (for sorting at the end)
+    """
+    basename = re.split(r'[/\\]', filename)[-1]  # Get just the filename
+    match = re.match(r'^(\d+)-', basename)
+    if match:
+        return int(match.group(1))
+    return 999999  # High number for files without order prefix
+
+
+def remove_order_prefix(filename: str) -> str:
+    """
+    Remove the order prefix from a filename (number and dash).
+    
+    Args:
+        filename: Filename to clean
+        
+    Returns:
+        Filename without the order prefix
+    """
+    return re.sub(r'^\d+-', '', filename)

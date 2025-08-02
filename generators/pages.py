@@ -9,7 +9,7 @@ import markdown
 from jinja2 import Environment, DictLoader, select_autoescape
 
 from templates import TEMPLATES
-from core.utils import slugify, extract_first_h1, extract_first_h2
+from core.utils import slugify, extract_first_h1, extract_first_h2, extract_order_number, remove_order_prefix
 
 
 class PageGenerator:
@@ -74,7 +74,11 @@ class PageGenerator:
     def generate_single_page(self, page_config: Dict[str, Any]) -> None:
         """Generate a single page from markdown."""
         title = page_config.get('title') or os.path.splitext(os.path.basename(page_config['path']))[0].title()
-        slug = slugify(title)
+        
+        filename_without_ext = os.path.splitext(os.path.basename(page_config['path']))[0]
+        clean_filename = remove_order_prefix(filename_without_ext)
+        slug = slugify(clean_filename)
+        
         path = page_config['path']
         
         if not os.path.isfile(path):
@@ -112,19 +116,22 @@ class PageGenerator:
             print(f"Warning: Directory '{path}' not found.")
             return
         
-        files = sorted(glob.glob(os.path.join(path, '*.md')))
+        files = glob.glob(os.path.join(path, '*.md'))
+        files.sort(key=extract_order_number, reverse=True)
+        
         items = []
         
         # Generate individual pages
         for md_file in files:
             name = os.path.splitext(os.path.basename(md_file))[0]
-            page_slug = slugify(name)
+            clean_name = remove_order_prefix(name)
+            page_slug = slugify(clean_name)
             
             with open(md_file, encoding='utf-8') as f:
                 raw = f.read()
             
             # Extract metadata
-            metadata = self._extract_page_metadata(raw, name)
+            metadata = self._extract_page_metadata(raw, clean_name)
             
             content_html = markdown.markdown(raw, extensions=['fenced_code'])
             rendered = self.env.get_template('page.html').render(
