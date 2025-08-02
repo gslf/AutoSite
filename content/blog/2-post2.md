@@ -5,7 +5,7 @@
 This is a "game" in python.
 
 ```python
-import random|
+import random
 
 n = random.randint(1, 10)
 guess = int(input("Indovina un numero tra 1 e 10: "))

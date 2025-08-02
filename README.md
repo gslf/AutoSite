@@ -22,10 +22,11 @@
 - **📱 Mobile Responsive** - Looks perfect on all devices
 - **⚡ Lightning Fast** - Generates sites in milliseconds
 - **🗂️ Smart Navigation** - Automatic menu generation from your content
+- **🔢 Intelligent Sorting** - Number-based article ordering with clean URLs
 - **📄 Pagination** - Built-in pagination for blog posts and collections
 - **🔗 External Links** - Seamlessly integrate external resources
-- **🎯 SEO Ready** - Clean HTML structure optimized for search engines
-- **🌙 Modern Design** - Clean, professional aesthetic with smooth animations
+- **🎯 SEO Friendly** - Clean HTML structure optimized for search engines
+- **🌙 Minimal Design** - Clean, professional aesthetic with smooth animations
 
 ## 🖼️ Demo
 
@@ -80,8 +81,9 @@ AutoSite/
 │   ├── home.md           # Homepage content
 │   ├── about.md          # About page
 │   └── blog/             # Blog posts directory
-│       ├── post1.md
-│       ├── post2.md
+│       ├── 1-post1.md    # Numbered posts for ordering
+│       ├── 2-post2.md
+│       ├── 3-post3.md
 │       └── ...
 ├── 🎨 assets/             # Custom assets (fonts, images)
 ├── 🏗️ templates/          # HTML templates
@@ -132,6 +134,53 @@ pages:
 | `theme.font_family` | CSS font family for the site | `"'Roboto', sans-serif"` |
 | `theme.primary_color` | Primary color (hex) | `"#ff6b6b"` |
 | `theme.contrast_color` | Accent color (hex) | `"#4ecdc4"` |
+
+## 📋 Content Organization
+
+### 🔢 Article Ordering System
+
+AutoSite uses an intelligent article ordering system based on number prefixes in filenames. This system allows you to control the display order of content without affecting the final URL.
+
+#### How It Works
+
+Files in the `content/blog/` folder (or other content folders) can be prefixed with a number followed by a dash:
+
+```
+content/blog/
+├── 1-introduction.md      # First article
+├── 2-basic-tutorial.md    # Second article
+├── 3-configuration.md     # Third article
+├── 10-conclusions.md      # Tenth article
+└── 15-appendix.md         # Fifteenth article
+```
+
+#### System Features
+
+- **🎯 Numeric Ordering**: Articles are sorted based on the number prefix
+- **🔗 Clean URLs**: The number doesn't appear in the final URL (`/blog/introduction.html` instead of `/blog/1-introduction.html`)
+- **📝 Clean Titles**: Article titles don't include the number prefix
+- **🔄 Flexibility**: Easy reordering by simply changing the numbers
+- **📊 Gap Support**: Numbers don't need to be consecutive (1, 2, 5, 10 works perfectly)
+
+#### Practical Examples
+
+```markdown
+# File: 1-welcome.md
+# Generated URL: /blog/welcome.html
+# Position: First in the list
+
+# File: 5-advanced-tutorial.md  
+# Generated URL: /blog/advanced-tutorial.html
+# Position: After all articles with number < 5
+
+# File: 10-conclusions.md
+# Generated URL: /blog/conclusions.html
+# Position: Last in the list (if it's the highest number)
+```
+
+#### Files Without Numbering
+
+Files without a number prefix are sorted alphabetically and positioned after all numbered files.
 
 
 ## 🎨 Theme customization
