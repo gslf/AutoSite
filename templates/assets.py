@@ -36,6 +36,13 @@ body {
     padding: 1rem; 
 }
 
+img{
+    max-width: 100%;
+    height: auto;
+    margin-bottom:40px;
+    margin-top:20px;
+}
+
 /* Header & Navigation */
 header { 
     background: rgba(255, 255, 255, 0.95); 
