@@ -56,6 +56,14 @@ class SiteConfig:
             'contrast_color': theme.get('contrast_color', '#764ba2')
         }
     
+    @property
+    def assets(self) -> Dict[str, str]:
+        """Get assets configuration with defaults."""
+        assets = self._config.get('assets', {})
+        return {
+            'source_dir': assets.get('source_dir', 'assets')
+        }
+    
     def get(self, key: str, default: Any = None) -> Any:
         """Get configuration value by key."""
         return self._config.get(key, default)

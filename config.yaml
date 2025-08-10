@@ -1,8 +1,17 @@
+#######################################
 # Website title
 title: "🚀 AutoSite"
 
+
+#######################################
+# Configurations
+
 # Base URL (leave empty for root, or use /subfolder for subdirectories)
 base_url: "/site"
+
+# Assets configuration
+assets:
+  source_dir: "assets"
 
 # Theme customization
 theme:
@@ -10,6 +19,8 @@ theme:
   primary_color: "#a1752f"
   contrast_color: "#300175"
 
+
+#######################################
 # Website Pages
 homepage: "content/home.md"
 

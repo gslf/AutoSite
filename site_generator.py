@@ -11,7 +11,7 @@ class SiteGenerator:
     def __init__(self, config_path: str = 'config.yaml', output_dir: str = 'site'):
         self.config = SiteConfig(config_path)
         self.output_dir = output_dir
-        self.asset_manager = AssetManager(output_dir)
+        self.asset_manager = AssetManager(output_dir, self.config.assets['source_dir'])
         self.nav_builder = NavigationBuilder(self.config.pages)
     
     def generate(self, paginate_by: int = 10) -> None:
