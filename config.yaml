@@ -6,7 +6,7 @@ title: "🚀 AutoSite"
 #######################################
 # Configurations
 
-# Base URL (leave empty for root, or use /subfolder for subdirectories)
+# Base URL (use "/"" for root, or use "/foldername" for subdirectories)
 base_url: "/site"
 
 # Assets configuration

@@ -43,6 +43,17 @@ img{
     margin-top:20px;
 }
 
+ul{
+  list-style: disc inside; 
+  padding-left: 28px;    
+  margin: 0;
+}
+
+hr{
+    margin-top:38px;
+    margin-bottom:8px;
+}
+
 /* Header & Navigation */
 header { 
     background: rgba(255, 255, 255, 0.95); 
@@ -59,6 +70,13 @@ h2{
     font-size: 1rem;
     margin-bottom: 45px;
 }
+
+h3{
+    text-transform: uppercase;
+    margin-top: 28px;
+    margin-bottom:8px;
+}
+
 
 header .container { 
     display: flex; 
