@@ -3,7 +3,7 @@
 Asset templates (CSS and JavaScript).
 """
 
-CSS_TEMPLATE = '''/* Variabili CSS personalizzabili */
+CSS_TEMPLATE = '''/* Custom CSS variavles */
 :root {
     --font-family: {{ font_family }};
     --primary-color: {{ primary_color }};
@@ -438,23 +438,26 @@ JS_TEMPLATE = '''document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Enhanced fade-in animation with stagger
+    // Fade-in: su mobile mostra subito, su desktop usa IntersectionObserver
     const faders = document.querySelectorAll('.fade-in');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, index * 100); // Stagger animation
-                observer.unobserve(entry.target);
-            }
+    if (window.innerWidth <= 768) {
+        faders.forEach(el => el.classList.add('visible'));
+    } else {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100); // Stagger animation
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         });
-    }, { 
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-    
-    faders.forEach(el => observer.observe(el));
+        faders.forEach(el => observer.observe(el));
+    }
     
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
