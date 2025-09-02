@@ -54,6 +54,11 @@ hr{
     margin-bottom:8px;
 }
 
+.video{
+    margin-top:30px;
+    margin-bottom:30px;
+}
+
 /* Header & Navigation */
 header { 
     background: rgba(255, 255, 255, 0.95); 
